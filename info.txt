@@ -1,0 +1,3 @@
+commentaire :
+exploquerle sparamètre des fonctions, a quoi ça sert la fonction en général
+
