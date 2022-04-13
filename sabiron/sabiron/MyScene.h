@@ -1,25 +1,27 @@
 #ifndef CPP_QT_TPMINIPROJET_MYSCENE_H
 #define CPP_QT_TPMINIPROJET_MYSCENE_H
 
-#include <QGraphicsScene>
-#include <QGraphicsRectItem>
-#include <QGraphicsPixmapItem>
-#include <QTimer>
-#include <QDebug>
-#include <QKeyEvent>
+#include "includes.h"
+#include "PersoItem.h"
 
 
 class MyScene : public QGraphicsScene {
     Q_OBJECT
 private:
     QTimer* timer;
-    QGraphicsTextItem* qgti;
-    QGraphicsRectItem* qgri;
+    PersoItem* perso;
+    QGraphicsPixmapItem* qgpiBg;
+    QGraphicsPixmapItem* qgpiMap;
+    QPixmap background;
 
 public:
     MyScene(QObject* parent = nullptr);
-    void keyPressEvent(QKeyEvent* event);
     virtual ~MyScene();
+    void drawBackground(QPainter* painter, const QRectF& rect);
+
+protected:
+     void keyPressEvent(QKeyEvent* event);
+     void keyReleaseEvent(QKeyEvent* event);
 
 public slots:
     void update();

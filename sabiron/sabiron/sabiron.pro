@@ -10,14 +10,20 @@ CONFIG += c++11
 
 SOURCES += \
     MyScene.cpp \
+    PersoItem.cpp \
     main.cpp \
     mainwindow.cpp
 
 HEADERS += \
     MyScene.h \
+    PersoItem.h \
+    includes.h \
     mainwindow.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RESOURCES += \
+    ressources.qrc

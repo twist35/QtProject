@@ -1,12 +1,6 @@
 #ifndef CPP_QT_TPMINIPROJET_MAINWINDOW_H
 #define CPP_QT_TPMINIPROJET_MAINWINDOW_H
 
-#include <QMainWindow>
-#include <QGraphicsView>
-#include <QMenu>
-#include <QMenuBar>
-#include <QAction>
-#include <QMessageBox>
 
 #include "MyScene.h"
 
@@ -16,6 +10,7 @@ class MainWindow : public QMainWindow {
 private :
     MyScene* mainScene;
     QGraphicsView* mainView;
+    QGraphicsView* viewPerso;
     QMenu* helpMenu;
 
 

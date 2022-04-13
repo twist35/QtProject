@@ -1,4 +1,5 @@
-#include <QApplication>
+
+#include "includes.h"
 #include "MainWindow.h"
 
 int main(int argc, char *argv[]) {

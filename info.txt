@@ -1,3 +1,5 @@
 commentaire :
 exploquerle sparamètre des fonctions, a quoi ça sert la fonction en général
 
+chifrer le txt du hscore (soit dans un .txt ou dans des varibales windows -> voir classe spécific)
+

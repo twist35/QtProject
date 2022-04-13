@@ -8,14 +8,29 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     this->mainView = new QGraphicsView;
     this->mainView->setScene(mainScene);
 
-    this->setCentralWidget(mainView);
-    this->setWindowTitle("My main window");
-    this->resize(400, 800);
 
-    helpMenu = menuBar()->addMenu(tr("&Help"));
-    QAction* actionHelp = new QAction(tr("&About"), this);
+    this->viewPerso = new QGraphicsView();
+    this->viewPerso->setScene(mainScene);
+    this->viewPerso->setWindowTitle("Perso");
+    this->viewPerso->resize(905,925);
+    this->viewPerso->show();
+
+
+    this->setWindowTitle("Le Jeu du Turfu");
+
+
+
+    this->setCentralWidget(mainView);
+    //this->setFixedSize(900, 900);
+    this->resize(900,900);
+
+    helpMenu = menuBar()->addMenu(tr("&A Propos"));
+    QAction* actionHelp = new QAction(tr("&T'es prêt ?"), this);
     connect(actionHelp, SIGNAL(triggered()), this, SLOT(slot_aboutMenu()));
     helpMenu->addAction(actionHelp);
+
+
+
 }
 
 MainWindow::~MainWindow(){
@@ -24,7 +39,7 @@ MainWindow::~MainWindow(){
 
 void MainWindow::slot_aboutMenu(){
     QMessageBox msgBox;
-    msgBox.setText("A small QT/C++ projet...");
+    msgBox.setText("Tu sors ? Ou je te sors ?!");
     msgBox.setModal(true); // on souhaite que la fenetre soit modale i.e qu'on ne puisse plus cliquer ailleurs
     msgBox.exec();
 }
