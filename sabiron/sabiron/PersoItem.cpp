@@ -48,17 +48,20 @@ void PersoItem::setIsJump(bool nJump)
 
 void PersoItem::jump(int n)
 {
-    int dir = 1;
+
+    int dir = 1;  //gérer la direction du saut
     QPointF pos1 = this->pos();
-    if (this->direction == "gauche") //gérer la direction du saut
+    if (this->direction == "gauche")
         dir = -1;
     else if(this->direction == "droite")
         dir = 1;
 
-    if (n < 50)
-        this->setPos(pos1.x() + 5*dir, pos1.y() - 5);
+    /*if (n < 224)
+        this->setPos(pos1.x() + 1*dir, pos1.y() - 1);
     else
-        this->setPos(pos1.x() + 5*dir, pos1.y() + 5);
+        this->setPos(pos1.x() + 1*dir, pos1.y() + 1);*/
+    this->setPos(pos1.x() + 1*dir*2, this->getDebJump().y() - ((int)(-0.02*(n-112)*(n+112)))); // simulation de la parabole de saut
+     qDebug() << n << "      " << (int)(-0.2*(n-112)*(n+112));
 
 }
 int PersoItem::getCountJump()
@@ -68,4 +71,13 @@ int PersoItem::getCountJump()
 void PersoItem::setCountJump(int nCount)
 {
     this->countJump = nCount;
+}
+QPointF PersoItem::getDebJump()
+{
+    return this->debJump;
+}
+void PersoItem::setDebJump(QPointF nP)
+{
+    this->debJump.setX(nP.x());
+    this->debJump.setY(nP.y());
 }

@@ -9,6 +9,7 @@ private:
     QString direction = "bas";
     bool isJumped = false;
     int countJump = 0;
+    QPoint debJump;
 public:
     PersoItem(QString imageFileName): QGraphicsPixmapItem(QPixmap(imageFileName)){};
     void move();
@@ -19,6 +20,8 @@ public:
     void setIsJump(bool nJump);
     int getCountJump();
     void setCountJump(int nCount);
+    QPointF getDebJump();
+    void setDebJump(QPointF nP);
 
 
 };

@@ -68,9 +68,9 @@ void MyScene::update()
     //qDebug() << this->perso->getIsJump();
     if (this->perso->getIsJump() == true)
     {
-        if(this->perso->getCountJump() < 100)
+        if(this->perso->getCountJump() < 224)
         {
-            this->perso->jump(this->perso->getCountJump());
+            this->perso->jump(this->perso->getCountJump() -112);
             this->perso->setCountJump(this->perso->getCountJump() + 1);
             qDebug() << "saut n°" <<this->perso->getCountJump() ;
         }
@@ -104,6 +104,8 @@ void MyScene::keyPressEvent(QKeyEvent* event){
             break;
         case Qt::Key_Space:
             this->perso->setIsJump(true);
+            QPointF pos1 = this->perso->pos();
+            this->perso->setDebJump(pos1);
             break;
     }
 }
