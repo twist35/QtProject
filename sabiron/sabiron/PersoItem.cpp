@@ -2,14 +2,10 @@
 #include "PersoItem.h"
 
 void PersoItem::move() {
-
-
+    //this->moveBy(0, 5);
     QPointF pos = this->pos();
 
-    /*if (pos.x() > this->scene()->width()) {
-        qDebug() << "droite";
-        this->moveBy(-5,0);
-    }*/
+
     if (pos.x() <0) {
         qDebug() << "gauche";
         this->moveBy(5,0);
@@ -21,7 +17,14 @@ void PersoItem::move() {
     if (pos.y() > 810) {
         qDebug() << "bas";
         this->moveBy(0,-5);
-    }
+    }/*
+    if(this->getIsJump() == true)
+    {
+        this->setPos(pos.x()+5, pos.y()-5);
+        this->setIsJump(false);
+        //this->jump();
+    }*/
+
 
 
 }
@@ -43,13 +46,26 @@ void PersoItem::setIsJump(bool nJump)
     this->isJumped = nJump;
 }
 
-void PersoItem::jump(/*MyScene* s*/)
+void PersoItem::jump(int n)
 {
+    int dir = 1;
     QPointF pos1 = this->pos();
-    for(int i=0; i< 384; i++)
-    {
-        this->setPos(pos1.x()+i,pos1.y()-i*i+3);
-        //s->update();
-    }
+    if (this->direction == "gauche") //gérer la direction du saut
+        dir = -1;
+    else if(this->direction == "droite")
+        dir = 1;
 
+    if (n < 50)
+        this->setPos(pos1.x() + 5*dir, pos1.y() - 5);
+    else
+        this->setPos(pos1.x() + 5*dir, pos1.y() + 5);
+
+}
+int PersoItem::getCountJump()
+{
+    return this->countJump;
+}
+void PersoItem::setCountJump(int nCount)
+{
+    this->countJump = nCount;
 }

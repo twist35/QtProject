@@ -15,7 +15,6 @@ MyScene::MyScene(QObject* parent)   : QGraphicsScene(parent) {
     this->perso = new PersoItem("img/1.png");
     this->addItem(this->perso);
     this->perso->setPos(0,0);
-    this->perso->setIsJump(false);
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(update()));
     timer->start(20); // =50fps
@@ -27,13 +26,24 @@ MyScene::~MyScene() {
 
 void MyScene::update()
 {
+    this->perso->move();
+    /*if (this->perso->getIsJump() == true)
+    {
+        QPointF pos1 = this->perso->pos();
+        for (size_t i = 0; i < 100; i++)
+        {
+            this->perso->setPos(pos1.x() + 1, pos1.y() - 1);
+            qDebug() << i;
+        }
+        perso->setIsJump(false);
+    }*/
     /*if (this->perso->getIsJump() ==  true)
     {
         this->perso->jump();
         this->perso->setIsJump(false);
     }*/
 
-    //qgti->setPos(pos.rx(), pos.ry()+1); //incrémentation de la coordonnée y
+
     if (this->perso->collidesWithItem(this->qgpiMap)) { //gestion des collsions avec le bg
         /*QList<QGraphicsItem*> ListCollingItem = this->perso->collidingItems(); //recupere les item en collison avec
         qDebug() << ListCollingItem;*/
@@ -51,19 +61,28 @@ void MyScene::update()
 
     QList<QGraphicsView*> ListVue= this->views(); //recupere toutes les vue
     //qDebug() <<"nbVue" << ListVue;
-    ListVue[1]->centerOn(this->perso);
-    this->perso->move();
 
+    ListVue[1]->centerOn(this->perso);
+
+
+    //qDebug() << this->perso->getIsJump();
+    if (this->perso->getIsJump() == true)
+    {
+        if(this->perso->getCountJump() < 100)
+        {
+            this->perso->jump(this->perso->getCountJump());
+            this->perso->setCountJump(this->perso->getCountJump() + 1);
+            qDebug() << "saut n°" <<this->perso->getCountJump() ;
+        }
+        else
+        {
+            this->perso->setIsJump(false);
+            this->perso->setCountJump(0);
+        }
+
+    }
 }
 void MyScene::keyPressEvent(QKeyEvent* event){
-
-
-    if(event->key() == Qt::Key_Space) { // appui sur la touche espace du clavier
-    //qDebug() << "Touche espace appuyée";
-    /*QPointF pos1 = this->qgpiTest->pos(); //récupération de la position de l'objet qgti
-    this->qgpiTest->moveBy(5,0);*/
-    }
-
     switch(event->key())
     {
         case Qt::Key_Up:
@@ -88,15 +107,19 @@ void MyScene::keyPressEvent(QKeyEvent* event){
             break;
     }
 }
-void MyScene::keyReleaseEvent(QKeyEvent* event)
+/*void MyScene::keyReleaseEvent(QKeyEvent* event)
 {
     if(event->key() == Qt::Key_Space)
     this->perso->setIsJump(false);
 
-}
+}*/
 
 
 void MyScene::drawBackground(QPainter *painter, const QRectF &rect) {
     Q_UNUSED(rect);
     painter->drawPixmap(QRectF(0,0,background.width(), background.height()), background, sceneRect());
 }
+
+
+
+

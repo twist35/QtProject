@@ -6,16 +6,19 @@
 class PersoItem : public QGraphicsPixmapItem
 {
 private:
-    QString direction;
-    bool isJumped;
+    QString direction = "bas";
+    bool isJumped = false;
+    int countJump = 0;
 public:
     PersoItem(QString imageFileName): QGraphicsPixmapItem(QPixmap(imageFileName)){};
     void move();
-    void jump(/*MyScene* s*/);
+    void jump(int n);
     QString getDirection();
     void setDirection(QString nDiection);
     bool getIsJump();
     void setIsJump(bool nJump);
+    int getCountJump();
+    void setCountJump(int nCount);
 
 
 };
