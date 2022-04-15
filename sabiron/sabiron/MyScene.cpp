@@ -27,26 +27,11 @@ MyScene::~MyScene() {
 void MyScene::update()
 {
     this->perso->move();
-    /*if (this->perso->getIsJump() == true)
-    {
-        QPointF pos1 = this->perso->pos();
-        for (size_t i = 0; i < 100; i++)
-        {
-            this->perso->setPos(pos1.x() + 1, pos1.y() - 1);
-            qDebug() << i;
-        }
-        perso->setIsJump(false);
-    }*/
-    /*if (this->perso->getIsJump() ==  true)
-    {
-        this->perso->jump();
-        this->perso->setIsJump(false);
-    }*/
-
 
     if (this->perso->collidesWithItem(this->qgpiMap)) { //gestion des collsions avec le bg
         /*QList<QGraphicsItem*> ListCollingItem = this->perso->collidingItems(); //recupere les item en collison avec
         qDebug() << ListCollingItem;*/
+
         if(this->perso->getDirection() == "bas")
             this->perso->moveBy(0, -5);
         else if(this->perso->getDirection() == "haut")
@@ -55,6 +40,13 @@ void MyScene::update()
             this->perso->moveBy(5, 0);
         else if(this->perso->getDirection() == "droite")
             this->perso->moveBy(-5, 0);
+
+        if(this->perso->getIsJump() == true)
+        {
+            this->perso->moveBy(0, -5);
+            this->perso->setIsJump(false);
+            this->perso->setCountJump(0);
+        }
     }
 
 
@@ -80,34 +72,39 @@ void MyScene::update()
             this->perso->setCountJump(0);
         }
 
+
     }
 }
 void MyScene::keyPressEvent(QKeyEvent* event){
-    switch(event->key())
+    if(this->perso->getIsJump() ==  false) // pour eviter de pouvoir se déplacer en même temps que le saut
     {
-        case Qt::Key_Up:
-            this->perso->moveBy(0, -5);
-            this->perso->setDirection("haut");
-            break;
-        case Qt::Key_Down:
-            this->perso->moveBy(0, 5);
-            this->perso->setDirection("bas");
-            break;
-        case Qt::Key_Right:
-            this->perso->moveBy(5, 0);
-            this->perso->setDirection("droite");
-            //this->perso->setPos(this->perso->pos().x() +5,0);
-            break;
-        case Qt::Key_Left:
-            this->perso->moveBy(-5, 0);
-            this->perso->setDirection("gauche");
-            break;
-        case Qt::Key_Space:
-            this->perso->setIsJump(true);
-            QPointF pos1 = this->perso->pos();
-            this->perso->setDebJump(pos1);
-            break;
+        switch(event->key())
+        {
+            case Qt::Key_Up:
+                this->perso->moveBy(0, -5);
+                this->perso->setDirection("haut");
+                break;
+            case Qt::Key_Down:
+                this->perso->moveBy(0, 5);
+                this->perso->setDirection("bas");
+                break;
+            case Qt::Key_Right:
+                this->perso->moveBy(5, 0);
+                this->perso->setDirection("droite");
+                //this->perso->setPos(this->perso->pos().x() +5,0);
+                break;
+            case Qt::Key_Left:
+                this->perso->moveBy(-5, 0);
+                this->perso->setDirection("gauche");
+                break;
+            case Qt::Key_Space:
+                this->perso->setIsJump(true);
+                QPointF pos1 = this->perso->pos();
+                this->perso->setDebJump(pos1);
+                break;
+        }
     }
+
 }
 /*void MyScene::keyReleaseEvent(QKeyEvent* event)
 {

@@ -53,15 +53,15 @@ void PersoItem::jump(int n)
     QPointF pos1 = this->pos();
     if (this->direction == "gauche")
         dir = -1;
-    else if(this->direction == "droite")
+    else
         dir = 1;
 
     /*if (n < 224)
         this->setPos(pos1.x() + 1*dir, pos1.y() - 1);
     else
         this->setPos(pos1.x() + 1*dir, pos1.y() + 1);*/
-    this->setPos(pos1.x() + 1*dir*2, this->getDebJump().y() - ((int)(-0.02*(n-112)*(n+112)))); // simulation de la parabole de saut
-     qDebug() << n << "      " << (int)(-0.2*(n-112)*(n+112));
+    this->setPos(pos1.x() + 1*dir*2, this->getDebJump().y() - ((int)(-0.025*(n-112)*(n+112)))); // simulation de la parabole de saut
+     qDebug() << n << "      " << (int)(-0.25*(n-112)*(n+112));
 
 }
 int PersoItem::getCountJump()
