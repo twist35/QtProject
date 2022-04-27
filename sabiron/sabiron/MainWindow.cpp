@@ -12,7 +12,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     this->viewPerso = new QGraphicsView();
     this->viewPerso->setScene(mainScene);
     this->viewPerso->setWindowTitle("Perso");
-    this->viewPerso->resize(905,925);
+    this->viewPerso->resize(1200,925);
     this->viewPerso->show();
 
 

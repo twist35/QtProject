@@ -13,6 +13,7 @@ private:
     QGraphicsPixmapItem* qgpiBg;
     QGraphicsPixmapItem* qgpiMap;
     QPixmap background;
+    QGraphicsRectItem* rDessous;
 
 public:
     MyScene(QObject* parent = nullptr);

@@ -2,8 +2,11 @@
 #include "PersoItem.h"
 
 void PersoItem::move() {
-    //this->moveBy(0, 5);
+    if(this->getVoidBelow())
+        this->moveBy(0, 5);
+
     QPointF pos = this->pos();
+
 
 
     if (pos.x() <0) {
@@ -51,17 +54,23 @@ void PersoItem::jump(int n)
 
     int dir = 1;  //gérer la direction du saut
     QPointF pos1 = this->pos();
-    if (this->direction == "gauche")
-        dir = -1;
-    else
+    if (this->getDirJump() == "droite")
         dir = 1;
+    else if (this->getDirJump() == "gauche")//par défaut vers la droite
+        dir = -1;
 
     /*if (n < 224)
         this->setPos(pos1.x() + 1*dir, pos1.y() - 1);
     else
         this->setPos(pos1.x() + 1*dir, pos1.y() + 1);*/
     this->setPos(pos1.x() + 1*dir*2, this->getDebJump().y() - ((int)(-0.025*(n-112)*(n+112)))); // simulation de la parabole de saut
-     qDebug() << n << "      " << (int)(-0.25*(n-112)*(n+112));
+     qDebug() << n << "      " << (int)(-0.025*(n-112)*(n+112));
+
+     // gestion des collision pendant le saut
+     if (this->getCountJump() < 112)
+         this->setDirection("haut");
+     if (this->getCountJump() > 112)
+         this->setDirection("bas");
 
 }
 int PersoItem::getCountJump()
@@ -80,4 +89,12 @@ void PersoItem::setDebJump(QPointF nP)
 {
     this->debJump.setX(nP.x());
     this->debJump.setY(nP.y());
+}
+QString PersoItem::getDirJump()
+{
+    return this->dirJump;
+}
+void PersoItem::setDirJump(QString nDirJump)
+{
+    this->dirJump = nDirJump;
 }

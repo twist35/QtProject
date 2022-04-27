@@ -17,6 +17,7 @@
 #include <QPixmap>
 #include <QLabel>
 #include <QPixmap>
+#include <QRectF>
 
 
 
