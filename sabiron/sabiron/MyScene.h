@@ -14,6 +14,7 @@ private:
     QGraphicsPixmapItem* qgpiMap;
     QPixmap background;
     QGraphicsRectItem* rDessous;
+    QGraphicsRectItem* rDessus;
 
 public:
     MyScene(QObject* parent = nullptr);

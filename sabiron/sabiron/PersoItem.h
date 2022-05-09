@@ -9,6 +9,7 @@ private:
     QString direction = "bas";
     bool isJumped = false;
     bool voidBelow = true;
+    bool voidAbove = true;
     QString dirJump = "droite";
     int countJump = 0;
     QPoint debJump;
@@ -22,6 +23,8 @@ public:
     void setIsJump(bool nJump);
     bool getVoidBelow(){return this->voidBelow;}
     void setVoidBelow(bool nVoid){this->voidBelow = nVoid;}
+    bool getVoidAbove(){return this->voidAbove;}
+    void setVoidAbove(bool nVoid){this->voidAbove = nVoid;}
     int getCountJump();
     void setCountJump(int nCount);
     void setDirJump(QString nDirJump);
