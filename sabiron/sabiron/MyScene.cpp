@@ -8,7 +8,7 @@ MyScene::MyScene(QObject* parent)   : QGraphicsScene(parent) {
 
     // this->setSceneRect(0,0, 900, 900);
 
-    this->qgpiMap = new QGraphicsPixmapItem(QPixmap("img/mapB.png"));
+    this->qgpiMap = new QGraphicsPixmapItem(QPixmap(":/images/map1"));
     this->addItem(qgpiMap);
     qgpiMap->setPos(0, 0);
 
@@ -18,17 +18,21 @@ MyScene::MyScene(QObject* parent)   : QGraphicsScene(parent) {
 
     this->rDessous = new QGraphicsRectItem(this->perso->pos().x()+25, this->perso->pos().y()+90, 45, 1); // rectangle sous le personnage
     this->addItem(this->rDessous);
-    //this->rDessous->setOpacity(0);// rect du dessous pr debug
+    this->rDessous->setOpacity(0);// rect du dessous pr debug
 
     this->rDessus = new QGraphicsRectItem(this->perso->pos().x()+25, this->perso->pos().y()/*+90*/, 45, 1); // rectangle sur le personnage
     this->addItem(this->rDessus);
-    //this->rDessous->setOpacity(0);// rect du dessous pr debug
+    this->rDessus->setOpacity(0);// rect du dessus pr debug
 
 
 
-    timer = new QTimer(this);
-    connect(timer, SIGNAL(timeout()), this, SLOT(update()));
-    timer->start(20); // =50fps
+
+
+
+    this->timer = new QTimer(this);
+    connect(this->timer, SIGNAL(timeout()), this, SLOT(update()));
+    this->timer->start(20); // =50fps
+
 }
 
 MyScene::~MyScene() {
@@ -37,8 +41,8 @@ MyScene::~MyScene() {
 
 void MyScene::update()
 {
-    qDebug() <<"void below ? :" << this->perso->getVoidBelow();
-    qDebug() <<"Jumped ? :" << this->perso->getIsJump() << " \n";
+    //qDebug() <<"void below ? :" << this->perso->getVoidBelow();
+    //qDebug() <<"Jumped ? :" << this->perso->getIsJump() << " \n";
 
     this->perso->move();
     this->rDessous->setPos(this->perso->pos().x(), this->perso->pos().y());
@@ -81,10 +85,10 @@ void MyScene::update()
     }
     if (this->perso->getIsJump())
     {
-        qDebug() << "saut en cours";
+        //qDebug() << "saut en cours";
         if(this->perso->getCountJump() <= 224)
         {
-            this->perso->setDirJump(this->perso->getDirection());
+            //this->perso->setDirJump(this->perso->getDirection());
             this->perso->jump(this->perso->getCountJump() - 112);
             this->perso->setCountJump(this->perso->getCountJump() + 1);
         }
@@ -96,16 +100,16 @@ void MyScene::update()
         }
     }
 
-    if(this->rDessous->collidesWithItem(this->qgpiMap) /*&& */){ // si le rectangle du dessous touche la map
+    if(this->rDessous->collidesWithItem(this->qgpiMap)){ // si le rectangle du dessous touche la map
         this->perso->setVoidBelow(false);
-        //his->perso->moveBy(0,-4); // remettre si bug ou le personnage rentre sol sans saut
+        this->perso->moveBy(0,-4); // remettre si bug ou le personnage rentre sol sans saut mais rajoute bug qu'il faut parfois appuyer 2 fois sur espace
         if (this->perso->getIsJump() && this->perso->getCountJump() > 5)
         {
             this->perso->setIsJump(false);
             this->perso->setCountJump(0);
             this->perso->setDirection("bas");
             this->perso->moveBy(0,-4);
-            qDebug() << "collison rect dessous";
+            //qDebug() << "collison rect dessous";
         }
     }
     else
@@ -122,7 +126,7 @@ void MyScene::update()
             this->perso->setCountJump(0);
             this->perso->setDirection("bas");
             this->perso->moveBy(0,4);
-            qDebug() << "collison rect dessus";
+            //qDebug() << "collison rect dessus";
         }
     }
     else
@@ -137,6 +141,9 @@ void MyScene::update()
 
 
 }
+
+
+
 /*void MyScene::keyReleaseEvent(QKeyEvent* event)
 {
     if(event->key() == Qt::Key_Space)
@@ -164,11 +171,12 @@ void MyScene::keyPressEvent(QKeyEvent* event){
         case Qt::Key_Right:
             this->perso->moveBy(5*jumpSpeed, 0);
             this->perso->setDirection("droite");
-            //this->perso->setPos(this->perso->pos().x() +5,0);
+            this->perso->setDirJump("droite");
             break;
         case Qt::Key_Left:
             this->perso->moveBy(-5*jumpSpeed, 0);
             this->perso->setDirection("gauche");
+            this->perso->setDirJump("gauche");
             break;
     }
 

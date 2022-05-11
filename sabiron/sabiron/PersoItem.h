@@ -7,10 +7,10 @@ class PersoItem : public QGraphicsPixmapItem
 {
 private:
     QString direction = "bas";
+    QString dirJump = "droite";
     bool isJumped = false;
     bool voidBelow = true;
     bool voidAbove = true;
-    QString dirJump = "droite";
     int countJump = 0;
     QPoint debJump;
 public:
@@ -31,6 +31,7 @@ public:
     QString getDirJump();
     QPointF getDebJump();
     void setDebJump(QPointF nP);
+
 
 
 };

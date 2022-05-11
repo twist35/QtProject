@@ -12,14 +12,23 @@ private :
     QGraphicsView* mainView;
     QGraphicsView* viewPerso;
     QMenu* helpMenu;
+    QTimer* scoreTimer;
+    int score = 0;
+    QLabel* scoreLabel;
+    int temps_m = 0;
+    int temps_s = 0;
+    QFile* scoreFile;
 
 
 public:
     MainWindow(QWidget* parent = nullptr);
     virtual ~MainWindow();
+    int getScore(){return this->score;}
+    void setScore(int nScore){this->score = nScore;}
 
 public slots:
     void slot_aboutMenu();
+    void updateScore();
 };
 
 

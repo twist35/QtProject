@@ -18,6 +18,11 @@
 #include <QLabel>
 #include <QPixmap>
 #include <QRectF>
+#include <QVBoxLayout>
+#include <QLabel>
+#include <QFile>
+#include <QIODevice>
+#include <QTextStream>
 
 
 
