@@ -11,6 +11,7 @@ private:
     bool isJumped = false;
     bool voidBelow = true;
     bool voidAbove = true;
+    bool win = false;
     int countJump = 0;
     QPoint debJump;
 public:
@@ -25,6 +26,8 @@ public:
     void setVoidBelow(bool nVoid){this->voidBelow = nVoid;}
     bool getVoidAbove(){return this->voidAbove;}
     void setVoidAbove(bool nVoid){this->voidAbove = nVoid;}
+    bool getIsWin(){return this->win;}
+    void setIstWin(bool nWin){this->win = nWin;}
     int getCountJump();
     void setCountJump(int nCount);
     void setDirJump(QString nDirJump);

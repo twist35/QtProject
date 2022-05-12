@@ -3,10 +3,10 @@
 
 MyScene::MyScene(QObject* parent)   : QGraphicsScene(parent) {
 
+    //QGraphicsTextItem *text = this->addText("Hello World");
+    //text->setPos(100, 200);
     this->background.load(":/images/bg");
     this->setSceneRect(0, 0, background.width(), background.height());
-
-    // this->setSceneRect(0,0, 900, 900);
 
     this->qgpiMap = new QGraphicsPixmapItem(QPixmap(":/images/map1"));
     this->addItem(qgpiMap);
@@ -30,9 +30,6 @@ MyScene::MyScene(QObject* parent)   : QGraphicsScene(parent) {
 
 
 
-
-
-
     this->timer = new QTimer(this);
     connect(this->timer, SIGNAL(timeout()), this, SLOT(update()));
     this->timer->start(20); // =50fps
@@ -52,6 +49,10 @@ void MyScene::update()
     this->perso->move();
     this->rDessous->setPos(this->perso->pos().x(), this->perso->pos().y());
     this->rDessus->setPos(this->perso->pos().x(), this->perso->pos().y());
+
+    if (this->perso->collidesWithItem(this->qgpiChest))
+        this->perso->setIstWin(true);
+
 
     if (this->perso->collidesWithItem(this->qgpiMap)) { //gestion des collsions avec le bg
 
@@ -185,8 +186,11 @@ void MyScene::keyPressEvent(QKeyEvent* event){
         case Qt::Key_R: // restart
             this->perso->setPos(0,400);
             this->perso->setDirection("haut");
-
             break;
+        case Qt::Key_F: // debug
+            this->perso->setPos(12500, 500);
+            break;
+
     }
 
     if( event->key() == Qt::Key_Space && (!this->perso->getIsJump() && !this->perso->getVoidBelow())) // pour ne sauter alors qu'on est deja en train de sauter

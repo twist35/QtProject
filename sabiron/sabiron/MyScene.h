@@ -9,7 +9,6 @@ class MyScene : public QGraphicsScene {
     Q_OBJECT
 private:
     QTimer* timer;
-    PersoItem* perso;
     QGraphicsPixmapItem* qgpiBg;
     QGraphicsPixmapItem* qgpiMap;
     QGraphicsPixmapItem* qgpiChest;
@@ -18,6 +17,7 @@ private:
     QGraphicsRectItem* rDessus;
 
 public:
+    PersoItem* perso;
     MyScene(QObject* parent = nullptr);
     virtual ~MyScene();
     void drawBackground(QPainter* painter, const QRectF& rect);

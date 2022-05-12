@@ -2,7 +2,9 @@
 #define CPP_QT_TPMINIPROJET_MAINWINDOW_H
 
 
+#include "includes.h"
 #include "MyScene.h"
+
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -13,7 +15,9 @@ private :
     QGraphicsView* viewPerso;
     QMenu* helpMenu;
     QTimer* scoreTimer;
+    QTimer* gameTimer;
     QLabel* scoreLabel;
+    QLabel* highScoreLabel;
     int temps_m = 0;
     int temps_s = 0;
     int score = 0;
@@ -30,10 +34,12 @@ public:
     int getHighScore(){return this->highScore;}
     void setHighScore(int nScore){this->highScore = nScore;}
     void saveScore();
+    void checkHighScore();
 
 public slots:
     void slot_aboutMenu();
     void updateScore();
+    void updateGame();
 };
 
 

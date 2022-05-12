@@ -22,7 +22,8 @@
 #include <QLabel>
 #include <QFile>
 #include <QIODevice>
-#include <QTextStream>
+#include <QGraphicsTextItem>
+#include <cmath>
 
 
 
