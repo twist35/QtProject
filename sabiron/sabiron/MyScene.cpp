@@ -12,17 +12,21 @@ MyScene::MyScene(QObject* parent)   : QGraphicsScene(parent) {
     this->addItem(qgpiMap);
     qgpiMap->setPos(0, 0);
 
+    this->qgpiChest = new QGraphicsPixmapItem(QPixmap(":/images/tresor"));
+    this->addItem(qgpiChest);
+    qgpiChest->setPos(0, 0);
+
     this->perso = new PersoItem("img/1.png");
     this->addItem(this->perso);
-    this->perso->setPos(0,0);
+
 
     this->rDessous = new QGraphicsRectItem(this->perso->pos().x()+25, this->perso->pos().y()+90, 45, 1); // rectangle sous le personnage
     this->addItem(this->rDessous);
-    this->rDessous->setOpacity(0);// rect du dessous pr debug
+    this->rDessous->setOpacity(0);// rect du dessous si debug à enlever
 
     this->rDessus = new QGraphicsRectItem(this->perso->pos().x()+25, this->perso->pos().y()/*+90*/, 45, 1); // rectangle sur le personnage
     this->addItem(this->rDessus);
-    this->rDessus->setOpacity(0);// rect du dessus pr debug
+    this->rDessus->setOpacity(0);// rect du dessus si debug à enlever
 
 
 
@@ -32,6 +36,7 @@ MyScene::MyScene(QObject* parent)   : QGraphicsScene(parent) {
     this->timer = new QTimer(this);
     connect(this->timer, SIGNAL(timeout()), this, SLOT(update()));
     this->timer->start(20); // =50fps
+    this->perso->setPos(0,500);
 
 }
 
@@ -56,9 +61,10 @@ void MyScene::update()
             this->perso->setCountJump(0);
             this->perso->setDirection("bas");
             qDebug() << "collison pdt sauttttttttttttttttttttttttttttttttttttttttt ";
+
+            this->perso->moveBy(0, -5); // regles quelques bugs de collision lors de l'arrivée du saut
         }
-        else
-        {
+
             if(this->perso->getDirection() == "bas")
             {
                 this->perso->moveBy(0, -5);
@@ -81,7 +87,7 @@ void MyScene::update()
                 this->perso->moveBy(-5, 0);
                 qDebug() << "Collsion droite";
             }
-        }
+
     }
     if (this->perso->getIsJump())
     {
@@ -109,7 +115,7 @@ void MyScene::update()
             this->perso->setCountJump(0);
             this->perso->setDirection("bas");
             this->perso->moveBy(0,-4);
-            //qDebug() << "collison rect dessous";
+            qDebug() << "collison rect dessous";
         }
     }
     else
@@ -126,7 +132,7 @@ void MyScene::update()
             this->perso->setCountJump(0);
             this->perso->setDirection("bas");
             this->perso->moveBy(0,4);
-            //qDebug() << "collison rect dessus";
+            qDebug() << "collison rect dessus";
         }
     }
     else
@@ -159,15 +165,13 @@ void MyScene::keyPressEvent(QKeyEvent* event){
     switch(event->key())
     {
         case Qt::Key_Up:
-            //this->perso->moveBy(0, -5*jumpSpeed);
-            this->perso->setPos(0,200);
-            this->perso->setDirection("haut");
+            this->perso->moveBy(0, -5);
             break;
-        /*case Qt::Key_Down:
-
-            this->perso->moveBy(0, 5*jumpSpeed);
+        case Qt::Key_Down:
+            this->perso->setIsJump(false);
+            this->perso->setCountJump(0);
             this->perso->setDirection("bas");
-            break;*/
+            break;
         case Qt::Key_Right:
             this->perso->moveBy(5*jumpSpeed, 0);
             this->perso->setDirection("droite");
@@ -177,6 +181,11 @@ void MyScene::keyPressEvent(QKeyEvent* event){
             this->perso->moveBy(-5*jumpSpeed, 0);
             this->perso->setDirection("gauche");
             this->perso->setDirJump("gauche");
+            break;
+        case Qt::Key_R: // restart
+            this->perso->setPos(0,400);
+            this->perso->setDirection("haut");
+
             break;
     }
 

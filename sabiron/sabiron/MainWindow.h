@@ -13,11 +13,13 @@ private :
     QGraphicsView* viewPerso;
     QMenu* helpMenu;
     QTimer* scoreTimer;
-    int score = 0;
     QLabel* scoreLabel;
     int temps_m = 0;
     int temps_s = 0;
+    int score = 0;
+    int highScore = 0;
     QFile* scoreFile;
+
 
 
 public:
@@ -25,6 +27,9 @@ public:
     virtual ~MainWindow();
     int getScore(){return this->score;}
     void setScore(int nScore){this->score = nScore;}
+    int getHighScore(){return this->highScore;}
+    void setHighScore(int nScore){this->highScore = nScore;}
+    void saveScore();
 
 public slots:
     void slot_aboutMenu();

@@ -31,7 +31,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     helpMenu->addAction(actionHelp);
 
     QVBoxLayout* layout = new QVBoxLayout(viewPerso);
-    this->scoreLabel = new QLabel("<h1>Score : 0000</h1>");
+    this->scoreLabel = new QLabel("<h1>Score : 0\'00\"</h1>");
     layout->addWidget(this->scoreLabel);
     layout->addStretch(1);
 
@@ -53,17 +53,16 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     QTextStream ecriture(scoreFile);
     ecriture.setCodec("UTF-8");
-    ecriture << "Bonjour," << "\n" << "Nous sommes le " << 3 << " avril " << 2009;
+    //ecriture << "Bonjour," << "\n" << "Nous sommes le " << 3 << " avril " << 2009;
 
     QTextStream lecture(scoreFile);
     scoreFile->seek(0);
-    //qDebug() << lecture.readAll();
-    while(ecriture.atEnd())
+    qDebug() << lecture.readAll();
+    /*while(!ecriture.atEnd())
     {
-        scoreFile->seek(0);
-        QString line = lecture.readLine();
+        QString line = lecture.readLine();//lecture lligne par ligne qui marche pas
         qDebug() << line + "\n";
-    }
+    }*/
 }
 
 MainWindow::~MainWindow(){
@@ -87,9 +86,11 @@ void MainWindow::updateScore()
         this->temps_m++;
         this->temps_s = 0;
     }
-
-
     //qDebug() << this->getScore();
     //this->scoreLabel->setText("<h1>Score : " + QString::number(this->getScore()) + "</h1>");
     this->scoreLabel->setText("<h1>Score : " + QString::number(this->temps_m) + "\'"+ QString::number(this->temps_s)+ "\""+"</h1>");
+}
+void MainWindow::saveScore()
+{
+
 }

@@ -12,6 +12,7 @@ private:
     PersoItem* perso;
     QGraphicsPixmapItem* qgpiBg;
     QGraphicsPixmapItem* qgpiMap;
+    QGraphicsPixmapItem* qgpiChest;
     QPixmap background;
     QGraphicsRectItem* rDessous;
     QGraphicsRectItem* rDessus;
