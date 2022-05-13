@@ -24,6 +24,8 @@
 #include <QIODevice>
 #include <QGraphicsTextItem>
 #include <cmath>
+#include <QPushButton>
+#include <QtMultimedia/QMediaPlayer>
 
 
 

@@ -3,5 +3,9 @@
         <file alias="bg">images/bg.png</file>
         <file alias="map1">images/map1.png</file>
         <file alias="tresor">images/tresor.png</file>
+        <file alias="ico">images/ico.png</file>
+    </qresource>
+    <qresource prefix="/data">
+        <file alias="score">data/score.txt</file>
     </qresource>
 </RCC>

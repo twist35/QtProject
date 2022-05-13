@@ -18,28 +18,33 @@ private :
     QTimer* gameTimer;
     QLabel* scoreLabel;
     QLabel* highScoreLabel;
-    int temps_m = 0;
-    int temps_s = 0;
     int score = 0;
     int highScore = 0;
     QFile* scoreFile;
-
-
+    QDialog* diagMenu;
+    QVBoxLayout* vLayoutMenu;
+    QLabel* messageMenu;
+    QHBoxLayout* hLayoutMenu;
+    QPushButton* buttonRePlay;
+    QPushButton* buttonQuit;
 
 public:
     MainWindow(QWidget* parent = nullptr);
-    virtual ~MainWindow();
+    //virtual ~MainWindow();
     int getScore(){return this->score;}
     void setScore(int nScore){this->score = nScore;}
     int getHighScore(){return this->highScore;}
     void setHighScore(int nScore){this->highScore = nScore;}
     void saveScore();
     void checkHighScore();
+    void menu();
 
 public slots:
     void slot_aboutMenu();
     void updateScore();
     void updateGame();
+    void restart();
+    void closef();
 };
 
 

@@ -12,6 +12,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     this->viewPerso = new QGraphicsView();
     this->viewPerso->setScene(mainScene);
     this->viewPerso->setWindowTitle("Perso");
+    this->viewPerso->setWindowIcon(QIcon(":/images/ico"));
     this->viewPerso->resize(1200,925);
     this->viewPerso->show();
     /*this->viewPerso->setMinimumSize(1200,925);
@@ -34,7 +35,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     this->scoreLabel = new QLabel("<h1>Score : 0\'00\"</h1>");
     layout->addWidget(this->scoreLabel);
 
-
     this->scoreTimer = new QTimer(this);
     connect(this->scoreTimer, SIGNAL(timeout()), this, SLOT(updateScore()));
     this->scoreTimer->start(1000); // pour incémenter d'une seconde à chaque fois
@@ -50,18 +50,29 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     layout->addStretch(1);
 
     this->scoreFile = new QFile("score.txt");
+    //this->scoreFile = new QFile(":/data/score"); // ne fonctionne pas, on garde en fichier dans le dossier debug
     if (!this->scoreFile->open(QIODevice::ReadWrite | QIODevice::Text))
     {
         qDebug() << "erreur ouverture de fichier";
         return;
     }
 
+    this->diagMenu = new QDialog;
+    this->vLayoutMenu = new QVBoxLayout(diagMenu);
+    this->messageMenu = new QLabel("default");
+    this->vLayoutMenu->addWidget(this->messageMenu);
+    this->hLayoutMenu = new QHBoxLayout();
+    this->vLayoutMenu->addLayout(this->hLayoutMenu);
+    this->buttonRePlay = new QPushButton("Rejouer");
+    this->buttonQuit = new QPushButton("Quittez");
+    this->hLayoutMenu->addWidget(this->buttonRePlay);
+    this->hLayoutMenu->addWidget(this->buttonQuit);
+    this->diagMenu->setModal(true);
 
+
+    //this->diagMenu->hide();
 }
 
-MainWindow::~MainWindow(){
-    this->scoreFile->close();
-}
 
 void MainWindow::slot_aboutMenu(){
     QMessageBox msgBox;
@@ -72,17 +83,14 @@ void MainWindow::slot_aboutMenu(){
 
 void MainWindow::updateScore()
 {
-    this->setScore(this->getScore() + 1);
-
-    this->temps_s++;
-    if(this->temps_s > 60)
+    if (!this->mainScene->perso->getIsWon())
     {
-        this->temps_m++;
-        this->temps_s = 0;
+        this->setScore(this->getScore() + 1);
+
+        float m =floor(this->getScore()/60); //calcul des minutes
+
+        this->scoreLabel->setText("<h1>Score : " + QString::number(m) + "\'"+ QString::number(this->getScore()-60*m)+ "\""+"</h1>");
     }
-    //qDebug() << this->getScore();
-    //this->scoreLabel->setText("<h1>Score : " + QString::number(this->getScore()) + "</h1>");
-    this->scoreLabel->setText("<h1>Score : " + QString::number(this->temps_m) + "\'"+ QString::number(this->temps_s)+ "\""+"</h1>");
 }
 
 void MainWindow::saveScore()
@@ -101,9 +109,17 @@ void MainWindow::saveScore()
 
 void MainWindow::updateGame()
 {
+    QObject::connect(this->buttonQuit, SIGNAL(clicked()), this, SLOT(closef()));
+    QObject::connect(this->buttonRePlay, SIGNAL(clicked()), this, SLOT(restart()));
 
-    if (this->mainScene->perso->getIsWin()) // si le joueur est arrivé à la fin
+
+    if (this->mainScene->perso->getIsWin() && !this->mainScene->perso->getIsWon()) // si le joueur est arrivé à la fin
+    {
+        this->mainScene->perso->setIsWon(true);
         this->saveScore();
+        this->menu();
+    }
+
     checkHighScore();
 }
 
@@ -125,4 +141,35 @@ void MainWindow::checkHighScore()
     float m = floor(this->highScore/60); // décompostion en minutes
 
     this->highScoreLabel->setText("<h1>Highscore : " + QString::number(m) + "\'"+ QString::number(this->highScore - m*60)+ "\""+"</h1>");
+}
+void MainWindow::menu()
+{
+    this->diagMenu->setWindowTitle("Menu");
+    this->diagMenu->setFixedSize(200, 150);
+
+    if(this->mainScene->perso->getIsWin())
+    {
+        this->messageMenu->setText("<strong> Bien joué !! <br> Vous Avez gagné <br>Que voulez vous faire ?</strong>");
+    }
+
+   this->diagMenu->show();
+}
+
+void MainWindow::closef() // on close le programme
+{
+    qDebug() << "test";
+    exit(0); // on force mais au moins ça marche
+}
+void MainWindow::restart() // on redémarra la partie
+{
+    this->mainScene->perso->setPos(0,500);
+    this->setScore(0);
+    this->mainScene->perso->setCountJump(0);
+    this->mainScene->perso->setIsJump(false);
+    this->mainScene->perso->setVoidAbove(true);
+    this->mainScene->perso->setVoidBelow(true);
+    this->mainScene->perso->setIsWin(false);
+    this->mainScene->perso->setIsWon(false);
+
+    this->diagMenu->hide();
 }

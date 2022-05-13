@@ -37,13 +37,10 @@ MyScene::MyScene(QObject* parent)   : QGraphicsScene(parent) {
 
 }
 
-MyScene::~MyScene() {
-
-}
 
 void MyScene::update()
 {
-    //qDebug() <<"void below ? :" << this->perso->getVoidBelow();
+     //qDebug() <<"void below ? :" << this->perso->getVoidBelow();
     //qDebug() <<"Jumped ? :" << this->perso->getIsJump() << " \n";
 
     this->perso->move();
@@ -51,7 +48,7 @@ void MyScene::update()
     this->rDessus->setPos(this->perso->pos().x(), this->perso->pos().y());
 
     if (this->perso->collidesWithItem(this->qgpiChest))
-        this->perso->setIstWin(true);
+        this->perso->setIsWin(true);
 
 
     if (this->perso->collidesWithItem(this->qgpiMap)) { //gestion des collsions avec le bg
@@ -188,7 +185,7 @@ void MyScene::keyPressEvent(QKeyEvent* event){
             this->perso->setDirection("haut");
             break;
         case Qt::Key_F: // debug
-            this->perso->setPos(12500, 500);
+            this->perso->setPos(12500, 400);
             break;
 
     }
@@ -201,6 +198,10 @@ void MyScene::keyPressEvent(QKeyEvent* event){
         this->perso->setDebJump(pos1);
         qDebug() << "appuie sur \"espace\" ";
     }
+
+}
+MyScene::~MyScene()
+{
 
 }
 
