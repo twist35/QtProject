@@ -35,6 +35,12 @@ MyScene::MyScene(QObject* parent)   : QGraphicsScene(parent) {
     this->timer->start(20); // =50fps
     this->perso->setPos(0,500);
 
+    QMediaPlayer* musique =  new QMediaPlayer();
+
+    musique->setMedia(QMediaContent(QUrl("qrc:/sound/acdc2")));
+    musique->setVolume(100);
+    musique->play();
+
 }
 
 

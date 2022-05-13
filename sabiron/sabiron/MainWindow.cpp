@@ -50,7 +50,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     layout->addStretch(1);
 
     this->scoreFile = new QFile("score.txt");
-    //this->scoreFile = new QFile(":/data/score"); // ne fonctionne pas, on garde en fichier dans le dossier debug
+    //this->scoreFile = new QFile("qrc:/data/score"); // ne fonctionne pas donc on garde en fichier dans le dossier debug
     if (!this->scoreFile->open(QIODevice::ReadWrite | QIODevice::Text))
     {
         qDebug() << "erreur ouverture de fichier";
@@ -77,7 +77,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 void MainWindow::slot_aboutMenu(){
     QMessageBox msgBox;
     msgBox.setText("Tu sors ? Ou je te sors ?!");
-    msgBox.setModal(true); // on souhaite que la fenetre soit modale i.e qu'on ne puisse plus cliquer ailleurs
+    msgBox.setModal(true); // on souhaite que la fenetre soit modale i.e on ne puisse plus cliquer ailleurs
     msgBox.exec();
 }
 

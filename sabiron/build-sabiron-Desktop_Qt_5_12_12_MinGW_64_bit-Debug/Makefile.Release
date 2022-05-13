@@ -116,7 +116,8 @@ release/qrc_ressources.cpp: ../sabiron/ressources.qrc \
 		../sabiron/images/tresor.png \
 		../sabiron/images/ico.png \
 		../sabiron/images/bg.png \
-		../sabiron/data/score.txt
+		../sabiron/sound/acdc2.mp3 \
+		../sabiron/sound/acdc.mp3
 	C:\Qt\Qt5.12.12\5.12.12\mingw73_64\bin\rcc.exe -name ressources ..\sabiron\ressources.qrc -o release\qrc_ressources.cpp
 
 compiler_moc_predefs_make_all: release/moc_predefs.h

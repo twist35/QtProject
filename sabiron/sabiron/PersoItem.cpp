@@ -16,13 +16,12 @@ void PersoItem::move() {
         this->moveBy(0,5);
         //this->setIsJump(false);
     }
-    if (pos.y() > 810) {
+    if (pos.y() > 810) // touche le vide
+    {
         qDebug() << "bas";
-        this->moveBy(0,-5);
+        this->setPos(0,400);
     }
-
 }
-
 
 
 QString PersoItem::getDirection()
